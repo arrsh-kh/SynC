@@ -14,7 +14,7 @@ test()
 ```
 ---
 #How to run
-```bash
+```python
 make
 ./syncc.out main.sync > output.c
 gcc output.c -o run
