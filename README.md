@@ -28,4 +28,5 @@ gcc output.c -o run
 - you can now do addition
 - added other mathematical operations
 - parser fails to parse because of the above
-![https://i.imgflip.com/9yxdcw.jpg]
+
+![](https://i.imgflip.com/9yxdcw.jpg)
