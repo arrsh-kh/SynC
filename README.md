@@ -1,5 +1,5 @@
 # SynC
-
+---
 A C based language with syntax of python!
 ---
 Syntax:
@@ -10,7 +10,7 @@ def test() {
     c = a + b
     return c
 }
-
+---
 test()
 ```
 ---
