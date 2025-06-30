@@ -23,6 +23,7 @@ test()
 make
 ./syncc.out main.sync > output.c
 gcc output.c -o run
+./run
 
 ```
 
