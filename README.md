@@ -1,31 +1,41 @@
 # SynC
+*A C based language with syntax of python!*
+
 ---
-A C based language with syntax of python!
----
-Syntax:
-```bash
+
+## Syntax:
+```python
 def test() {
     a = 1 + 2
     b = 3 + 4
     c = a + b
     return c
 }
----
+
 test()
 ```
+
 ---
-# How to run
-```python
+
+## How to run
+
+```bash
 make
 ./syncc.out main.sync > output.c
 gcc output.c -o run
 
 ```
+
 ---
-# Why?
+
+## Why?
+
 I want to learn bootstrapping
+
 ---
-# Progress report
+
+## Progress report
+
 - lexer works
 - parser works
 - interpreter works
