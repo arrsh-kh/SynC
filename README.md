@@ -1,5 +1,6 @@
 # SynC
-a c based language with syntax of python!
+
+A C based language with syntax of python!
 ---
 Syntax:
 ```bash
@@ -13,13 +14,16 @@ def test() {
 test()
 ```
 ---
-#How to run
+# How to run
 ```python
 make
 ./syncc.out main.sync > output.c
 gcc output.c -o run
 
 ```
+---
+# Why?
+I want to learn bootstrapping
 ---
 # Progress report
 - lexer works
