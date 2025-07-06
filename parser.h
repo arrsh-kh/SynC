@@ -47,5 +47,12 @@ typedef struct {
     int body_len;
 } Function;
 
-Function* parse(Token* tokens);
-void free_ast(Function* func);
+// NEW: Program structure to hold multiple functions
+typedef struct {
+    Function** functions;
+    int func_count;
+} Program;
+
+Program* parse(Token* tokens);
+void free_ast(Program* prog);
+void free_tokens(Token* tokens);
