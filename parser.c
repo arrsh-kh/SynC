@@ -99,7 +99,6 @@ Expr* parse_expr() {
     return parse_expr_bp(0);
 }
 
-
 Expr* parse_expr_bp(int min_prec) {
     Expr* left = parse_primary();
 
@@ -199,21 +198,73 @@ Function* parse_function() {
     return fn;
 }
 
-Function* parse(Token* toks) {
-    tokens = toks;
-    pos = 0;
-
-    return parse_function();
+// NEW: Parse multiple functions
+Program* parse_program() {
+    Program* prog = malloc(sizeof(Program));
+    prog->functions = NULL;
+    prog->func_count = 0;
+    
+    while (peek().type != TOKEN_EOF) {
+        Function* func = parse_function();
+        prog->functions = realloc(prog->functions, sizeof(Function*) * (prog->func_count + 1));
+        prog->functions[prog->func_count++] = func;
+    }
+    
+    return prog;
 }
 
-void free_ast(Function* func) {
-    free(func->name);
-    for (int i = 0; i < func->body_len; i++) {
-        Statement* s = func->body[i];
-        if (s->expr) free(s->expr);  // TODO: recursive free
-        if (s->name) free(s->name);
-        free(s);
+Program* parse(Token* toks) {
+    tokens = toks;
+    pos = 0;
+    return parse_program();
+}
+
+// Recursive free for expressions
+void free_expr(Expr* expr) {
+    if (!expr) return;
+    
+    switch (expr->type) {
+        case EXPR_VAR:
+            free(expr->var);
+            break;
+        case EXPR_BINARY:
+            free_expr(expr->binary.left);
+            free_expr(expr->binary.right);
+            break;
+        case EXPR_CALL:
+            free(expr->call.name);
+            for (int i = 0; i < expr->call.argc; i++) {
+                free_expr(expr->call.args[i]);
+            }
+            free(expr->call.args);
+            break;
     }
-    free(func->body);
-    free(func);
+    free(expr);
+}
+
+void free_ast(Program* prog) {
+    for (int i = 0; i < prog->func_count; i++) {
+        Function* func = prog->functions[i];
+        free(func->name);
+        for (int j = 0; j < func->body_len; j++) {
+            Statement* s = func->body[j];
+            free_expr(s->expr);
+            if (s->name) free(s->name);
+            free(s);
+        }
+        free(func->body);
+        free(func);
+    }
+    free(prog->functions);
+    free(prog);
+}
+
+// Free tokens
+void free_tokens(Token* tokens) {
+    for (int i = 0; tokens[i].type != TOKEN_EOF; i++) {
+        if (tokens[i].value) {
+            free(tokens[i].value);
+        }
+    }
+    free(tokens);
 }
