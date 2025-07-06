@@ -51,9 +51,9 @@ void print_token(Token token) {
     "=", "RETURN", "EOF", "UNKNOWN",
     "+", "-", "*", "/", "%", "//"
     };
-    printf("Token: %-10s", names[token.type]);
-    if (token.value) printf(" Value: %s", token.value);
-    printf("\n");
+    fprintf(stderr,"Token: %-10s", names[token.type]);
+    if (token.value) fprintf(stderr," Value: %s", token.value);
+    fprintf(stderr,"\n");
 }
 
 Token* tokenize(const char* src) {

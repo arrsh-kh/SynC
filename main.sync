@@ -1,9 +1,137 @@
-def test() {
-    a = 1 + 2 
-    b = 3 + 4
-    c = a + b
-    return c
+def math_operations() {
+    a = 10 + 5
+    b = 20 - 8
+    c = 6 * 7
+    d = 84 / 2
+    e = 17 % 5
+    f = 22 // 3
+    
+    result = a + b * c - d / e + f
+    
+    print(a)
+    print(b)
+    print(c)
+    print(d)
+    print(e)
+    print(f)
+    print(result)
+    
+    return result
 }
-def main(){
-    test()
+
+def variable_usage() {
+    x = 100
+    y = x + 50
+    z = y * 2
+    
+    final = x + y + z
+    
+    print(x)
+    print(y)
+    print(z)
+    print(final)
+    
+    return final
+}
+
+def nested_expressions() {
+    result = 2 + 3 * 4 - 1
+    complex = 10 + 5 * 2 / 2 - 3
+    
+    print(result)
+    print(complex)
+    
+    return complex
+}
+
+def function_calls() {
+    math_result = math_operations()
+    var_result = variable_usage()
+    nest_result = nested_expressions()
+    
+    total = math_result + var_result + nest_result
+    
+    print(math_result)
+    print(var_result)
+    print(nest_result)
+    print(total)
+    
+    return total
+}
+
+def calculator() {
+    num1 = 15
+    num2 = 4
+    
+    sum = num1 + num2
+    diff = num1 - num2
+    product = num1 * num2
+    quotient = num1 / num2
+    remainder = num1 % num2
+    floor_div = num1 // num2
+    
+    print(sum)
+    print(diff)
+    print(product)
+    print(quotient)
+    print(remainder)
+    print(floor_div)
+    
+    return sum + diff + product + quotient + remainder + floor_div
+}
+
+def expression_test() {
+    a = 5
+    b = 10
+    c = 3
+    
+    test1 = a + b * c
+    test2 = a * b + c
+    test3 = a + b / c
+    
+    test4 = b // c
+    
+    test5 = b % c
+    
+    test6 = a + b * c - a / c + b % c
+    
+    print(test1)
+    print(test2)
+    print(test3)
+    print(test4)
+    print(test5)
+    print(test6)
+    
+    return test6
+}
+
+def fibonacci() {
+    a = 1
+    b = 1
+    c = a + b
+    d = b + c
+    e = c + d
+    f = d + e
+    
+    print(a)
+    print(b)
+    print(c)
+    print(d)
+    print(e)
+    print(f)
+    
+    return f
+}
+
+def main() {
+    print(42)
+    
+    calculator()
+    expression_test()
+    fibonacci()
+    
+    grand_total = function_calls()
+    print(grand_total)
+    
+    return grand_total
 }

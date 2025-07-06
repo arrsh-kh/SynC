@@ -24,3 +24,4 @@ typedef struct {
 } Token;
 
 Token* tokenize(const char* src);
+void print_token(Token token);  
