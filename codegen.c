@@ -83,23 +83,26 @@ static void emit_function(Function* func) {
 void generate_c_code(Program* prog) {
     printf("#include <stdio.h>\n\n");
     
-    // Generate all functions
-    for (int i = 0; i < prog->func_count; i++) {
-        emit_function(prog->functions[i]);
-    }
-    
-    // Find main function or use first function
+    // Generate all functions except main (handle main specially)
     Function* main_func = NULL;
     for (int i = 0; i < prog->func_count; i++) {
         if (strcmp(prog->functions[i]->name, "main") == 0) {
             main_func = prog->functions[i];
-            break;
+        } else {
+            emit_function(prog->functions[i]);
         }
     }
     
-    // If no main function, create one that calls the first function
-    if (!main_func && prog->func_count > 0) {
-        printf("int main() {\n");
+    // Always generate a C main() function
+    printf("int main() {\n");
+    
+    if (main_func) {
+        // If there's a SynC main() function, call it
+        for (int i = 0; i < main_func->body_len; i++) {
+            emit_stmt(main_func->body[i]);
+        }
+    } else if (prog->func_count > 0) {
+        // If no SynC main(), call the first function
         Function* first_func = prog->functions[0];
         
         // Check if first function returns something
@@ -116,7 +119,8 @@ void generate_c_code(Program* prog) {
         } else {
             printf("    %s();\n", first_func->name);
         }
-        printf("    return 0;\n");
-        printf("}\n");
     }
+    
+    printf("    return 0;\n");
+    printf("}\n");
 }
