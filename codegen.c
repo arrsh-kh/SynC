@@ -63,9 +63,7 @@ static void emit_stmt(Statement* stmt) {
     }
 }
 
-void generate_c_code(Function* func) {
-    printf("#include <stdio.h>\n\n");
-    
+static void emit_function(Function* func) {
     int has_return = 0;
     for (int i = 0; i < func->body_len; i++) {
         if (func->body[i]->type == STMT_RETURN) {
@@ -73,20 +71,52 @@ void generate_c_code(Function* func) {
             break;
         }
     }
+    
     // Function declaration
     printf("%s %s() {\n", has_return ? "int" : "void", func->name);
     for (int i = 0; i < func->body_len; i++) {
         emit_stmt(func->body[i]);
     }
     printf("}\n\n");
+}
 
-    // main()
-    printf("int main() {\n");
-    if (func->body_len > 0 && func->body[func->body_len - 1]->type == STMT_RETURN) {
-   printf("    printf(\"%%d\\n\", %s());\n", func->name);
-    } else {
-        printf("    %s();\n", func->name);
+void generate_c_code(Program* prog) {
+    printf("#include <stdio.h>\n\n");
+    
+    // Generate all functions
+    for (int i = 0; i < prog->func_count; i++) {
+        emit_function(prog->functions[i]);
     }
-    printf("    return 0;\n");
-    printf("}\n");
+    
+    // Find main function or use first function
+    Function* main_func = NULL;
+    for (int i = 0; i < prog->func_count; i++) {
+        if (strcmp(prog->functions[i]->name, "main") == 0) {
+            main_func = prog->functions[i];
+            break;
+        }
+    }
+    
+    // If no main function, create one that calls the first function
+    if (!main_func && prog->func_count > 0) {
+        printf("int main() {\n");
+        Function* first_func = prog->functions[0];
+        
+        // Check if first function returns something
+        int has_return = 0;
+        for (int i = 0; i < first_func->body_len; i++) {
+            if (first_func->body[i]->type == STMT_RETURN) {
+                has_return = 1;
+                break;
+            }
+        }
+        
+        if (has_return) {
+            printf("    printf(\"%%d\\n\", %s());\n", first_func->name);
+        } else {
+            printf("    %s();\n", first_func->name);
+        }
+        printf("    return 0;\n");
+        printf("}\n");
+    }
 }
