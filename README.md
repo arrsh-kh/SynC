@@ -4,16 +4,7 @@
 ---
 
 ## Syntax:
-```python
-def test() {
-    a = 1 + 2
-    b = 3 + 4
-    c = a + b
-    return c
-}
-
-test()
-```
+look in main.sync
 
 ---
 
@@ -42,6 +33,6 @@ I want to learn bootstrapping
 - interpreter works
 - you can now do addition
 - added other mathematical operations
-- parser fails to parse because of the above
-
-![](https://i.imgflip.com/9yxdcw.jpg)
+- ~parser fails to parse because of the above~
+- everything works
+- now implementing conditionals
