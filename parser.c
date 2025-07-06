@@ -89,7 +89,7 @@ int get_precedence(TokenType type) {
         case TOKEN_DSLASH: return 2;
         case TOKEN_PLUS:
         case TOKEN_MINUS:  return 1;
-        default: return 0;
+        default: return -1;  // Return -1 for non-operators
     }
 }
 
@@ -105,7 +105,7 @@ Expr* parse_expr_bp(int min_prec) {
     while (1) {
         TokenType op_type = peek().type;
         int prec = get_precedence(op_type);
-        if (prec < min_prec) break;
+        if (prec < 0 || prec < min_prec) break;
 
         char op;
         switch (op_type) {

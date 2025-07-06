@@ -7,8 +7,9 @@
 #define INITIAL_CAPACITY 64
 
 int is_symbol(char c) {
-    return strchr("()+-*/%{}", c) != NULL;
+    return strchr("()+-*/%{}=", c) != NULL;  // Added '=' to the string
 }
+
 
 TokenType symbol_type(const char** p) {
     switch (**p) {

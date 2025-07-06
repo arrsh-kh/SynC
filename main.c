@@ -4,7 +4,8 @@
 #include "parser.h"
 #include "codegen.h"
 
-// Reads an entire file into a null-terminated string
+void print_token(Token token);
+
 char* read_file(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (!file) {
@@ -36,9 +37,18 @@ int main(int argc, char* argv[]) {
 
     // Step 1: Load source code
     char* source = read_file(argv[1]);
+    printf("Source code:\n%s\n", source);
 
     // Step 2: Lexing
     Token* tokens = tokenize(source);
+    
+    // DEBUG: Print all tokens
+    printf("\nTokens:\n");
+    for (int i = 0; tokens[i].type != TOKEN_EOF; i++) {
+        printf("%d: ", i);
+        print_token(tokens[i]);
+    }
+    printf("\n");
 
     // Step 3: Parsing
     Program* prog = parse(tokens);
