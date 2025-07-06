@@ -41,13 +41,14 @@ int main(int argc, char* argv[]) {
     Token* tokens = tokenize(source);
 
     // Step 3: Parsing
-    Function* func = parse(tokens);
+    Program* prog = parse(tokens);
 
     // Step 4: Generate C code
-    generate_c_code(func);
+    generate_c_code(prog);
 
     // Step 5: Cleanup
-    free_ast(func);
+    free_ast(prog);
+    free_tokens(tokens);
     free(source);
     return 0;
 }
